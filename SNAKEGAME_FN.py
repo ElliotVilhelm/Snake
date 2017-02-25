@@ -30,7 +30,7 @@ SCALE = 40
 #################  SNAKE GAME  ##########################################
 #########################################################################
 #########################################################################
-class SnakeGame(object):    
+class SnakeGame(object):
     #########################################################################
     # INITIALIZE ############################################################
     #########################################################################
@@ -60,7 +60,6 @@ class SnakeGame(object):
         self.image = pygame.image.load("SpaceBackground.gif").convert_alpha()
         self.image = pygame.transform.scale(self.image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 #
-         
         self.scoreFont = pygame.font.SysFont(None, 40)
 
         self.eventQueue = deque()
@@ -79,7 +78,6 @@ class SnakeGame(object):
           print 'x crash'
           self.gameOver = True
           self.hurt.play()
-          
         if self.snake.snake_body[0].rect.y + SCALE/2 >= SCREEN_HEIGHT or self.snake.snake_body[0].rect.y + 5 < 0:
             print 'y crash'
             self.gameOver = True
@@ -131,7 +129,6 @@ class SnakeGame(object):
                       self.showScores = True
 
 
-        
 
        # print "XVEL" , self.snake.snake_body[0].x_vel
         for event in pygame.event.get():
@@ -142,7 +139,7 @@ class SnakeGame(object):
           #  gameOver = True
           #  break
 
-          if event.type == pygame.KEYDOWN: 
+          if event.type == pygame.KEYDOWN:
             self.eventQueue.append(event)
 
           #  if event.key == pygame.K_LEFT or event.key == pygame.K_a: 
@@ -167,7 +164,7 @@ class SnakeGame(object):
           print event
 
 
-          if event.key == pygame.K_LEFT or event.key == pygame.K_a: 
+          if event.key == pygame.K_LEFT or event.key == pygame.K_a:
               if self.snake.snake_body[0].x_vel == 0:
                  self.snake.setVelocity(-1 * SCALE, 0)
           #      break
@@ -188,13 +185,12 @@ class SnakeGame(object):
 
 
         for i in range(len(self.apples)):
-        	    dist = Distance(self.snake.snake_body[0].rect.x, self.apples[i].x_pos, self.snake.snake_body[0].rect.y, self.apples[i].y_pos)
-        	    if dist < SCALE:
-
-            		self.powerUp.play() 
-            		self.snake.grow()
-            		self.snake.grow()          
-            		self.apples[i].respawn()
+            dist = Distance(self.snake.snake_body[0].rect.x, self.apples[i].x_pos, self.snake.snake_body[0].rect.y, self.apples[i].y_pos)
+            if dist < SCALE:
+                  self.powerUp.play()
+                  self.snake.grow()
+                  self.snake.grow()
+                  self.apples[i].respawn()
 
 
         pygame.display.flip()
@@ -211,7 +207,6 @@ class SnakeGame(object):
     def display_frame(self, screen):
          if not self.gameOver:
 
-      
             screen.blit(self.image, (0,0))
            # screen.fill(GREEN)
 
@@ -219,12 +214,11 @@ class SnakeGame(object):
             self.scoreText = self.scoreFont.render(Score, True, RED)
 
             for x in range(len(self.apples)):
-            	self.apples[x].draw(screen)
-            self.snake.draw(screen) 
+              self.apples[x].draw(screen)
+            self.snake.draw(screen)
             screen.blit(self.scoreText, [50, SCREEN_HEIGHT-50])
             self.drawBorders(screen)
 
-            
 
          else:
             screen.fill(BLACK)
@@ -241,7 +235,7 @@ class SnakeGame(object):
         pass
 
     def DrawScores(self, screen):
-      print "DRAAW SDCORES"
+      print "DRAW SCORES"
       screen.fill(BLACK)
       Bigfont = pygame.font.SysFont(None, 70)
       Medfont = pygame.font.SysFont(None, 20)
@@ -290,25 +284,20 @@ class Snake(object):
 
        self.block = Block(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, True)
 
-       
        self.all_sprites.add(self.block)
        self.BlockCount = 0
        self.snake_body = [self.block]
        #self.snake_body = [Block(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)]
     def move(self):
-         
 
          for i in reversed(range(1, self.BlockCount + 1)):
             if self.snake_body[0].x_vel == 0 and self.snake_body[0].y_vel == 0:
                break
-            
             self.snake_body[i].rect.x = int(round(self.snake_body[i-1].rect.x, -1))
             self.snake_body[i].rect.y = int(round(self.snake_body[i-1].rect.y, -1))
 
-         
          self.snake_body[0].move()
 
- 
 
     def setVelocity(self, x, y):
 
@@ -325,7 +314,6 @@ class Snake(object):
        self.all_sprites.update()
        self.all_sprites.draw(screen)
 
-   
     def grow(self):
        oreintation = self.findOrirentation(self.snake_body[self.BlockCount].x_vel, self.snake_body[self.BlockCount].y_vel)
        x_increment = 0
@@ -340,13 +328,8 @@ class Snake(object):
        elif oreintation == 3:
           x_increment = SCALE 
 
-       
 
        self.snake_body.append(Block(self.snake_body[self.BlockCount].rect.x + x_increment,self.snake_body[self.BlockCount].rect.y + y_increment))
- 
-       
-       #self.all_sprites.add(Block(self.snake_body[self.BlockCount].rect.x + x_increment,self.snake_body[self.BlockCount].rect.y + y_increment))
-    
        self.BlockCount += 1
     def printcoordinates(self):
        pass
@@ -371,7 +354,7 @@ class Snake(object):
           return 2
        if(x < 0 and y == 0):
          return 3
-   
+
 
     def die(self):
        for i in range(5, self.BlockCount):
@@ -380,7 +363,7 @@ class Snake(object):
              return True
        return False
 
-       
+
 class Block(pygame.sprite.Sprite):
 
    def __init__(self, x_cord, y_cord, head = False):
@@ -483,13 +466,13 @@ class Apple(pygame.sprite.Sprite):
     def respawn(self):
         self.x_pos = int(round(random.randrange(10, SCREEN_WIDTH-SCALE), -1))
         self.y_pos = int(round(random.randrange(10, SCREEN_HEIGHT-SCALE), -1))
- 
+
     def draw(self, screen):
        #pass
         #pygame.draw.rect(screen, WHITE, [self.x_pos, self.y_pos, SCALE, SCALE])
         # pygame.draw.rect(screen, WHITE, [self.x_pos, self.y_pos, SCALE, SCALE])
         screen.blit(self.image, (self.x_pos, self.y_pos))
-    
+
 #########################################################################
 #########################################################################
 
@@ -535,9 +518,8 @@ def ask(screen, question1):
     elif inkey <= 127:
       name.append(chr(inkey))
     display_box(screen, question1 + "-> " + string.join(name,""))
-  
-  return string.join(name,"")
 
+  return string.join(name,"")
 
 
 
@@ -587,9 +569,7 @@ def main():
 
 main()
 
-    
 
-   
 
 
 

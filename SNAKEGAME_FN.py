@@ -77,6 +77,7 @@ class SnakeGame(object):
                 print ('x crash')
                 self.gameOver = True
                 self.hurt.play()
+                self.SNAKE_ALIVE = False
             if self.snake.snake_body[0].rect.y + SCALE/2 >= SCREEN_HEIGHT or self.snake.snake_body[0].rect.y + 5 < 0:
                 self.SNAKE_ALIVE = False
                 print ('y crash')
